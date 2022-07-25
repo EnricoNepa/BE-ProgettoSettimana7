@@ -30,19 +30,18 @@ public class updateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Contatto contatto = new Contatto();
+		Contatto contatto = rubricaEjb.getContattoById(Long.valueOf(request.getParameter("id")));
 		NumTelefono numTel1 = new NumTelefono();
 		NumTelefono numTel2 = new NumTelefono();
+		ArrayList<NumTelefono> numeri = contatto.getNumTelefoni();
 		
 		Long id = Long.valueOf(request.getParameter("id"));
 		contatto = rubricaEjb.getContattoById(id);
-		ArrayList<NumTelefono> numeri = contatto.getNumTelefoni();
 		String nome = request.getParameter("nome");
 		String cognome = request.getParameter("cognome");
 		String email = request.getParameter("email");
 		String tel1 = request.getParameter("tel1");
-		String tel2 = request.getParameter("tel2");
-//		contatto.setId(id);
+		String tel2 = request.getParameter("tel2");	
 		
 		numTel1.setContatto(contatto);
 		numTel2.setContatto(contatto);
@@ -78,7 +77,6 @@ public class updateServlet extends HttpServlet {
 			numeri.set(1,numTel2);
 			}
 		}
-		
 		
 		contatto.setNumTelefoni(numeri);
 		
